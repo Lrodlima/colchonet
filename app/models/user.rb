@@ -6,11 +6,9 @@ class User < ApplicationRecord
   validates_confirmation_of :password
   validates_length_of :bio, minimum: 30, allow_blank: false
 
-  validate :email_format
+  validates_uniqueness_of :email
 
-  private
-
-  def email_format
+  validate do
     erros.add(:email, :invalid) unless email.match(EMAIL_REGEXP)
   end
 
